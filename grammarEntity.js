@@ -19,7 +19,7 @@ var GrammarEntity = function (wordsArray, nextEntities) {
         var textForValidation = text.trim();
 
         var success = true;
-        this.K.getWords().forEach( function (word) {
+        this.getWords().forEach( function (word) {
             if(textForValidation.match("^"+word)) {
                 validText += word + " ";
                 textForValidation = textForValidation.replace(word, '').trim();
@@ -30,8 +30,8 @@ var GrammarEntity = function (wordsArray, nextEntities) {
             return validText;
         });
 
-        if (success && this.K.getNextEntities().length > 0) {
-            this.K.getNextEntities().forEach( function (NextEntity) {
+        if (success && this.getNextEntities().length > 0) {
+            this.getNextEntities().forEach( function (NextEntity) {
                 validText += NextEntity.validateText(textForValidation);
             })
         }
