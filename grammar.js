@@ -3,7 +3,8 @@
  */
 /*
  G => S
- S => AB
+ S => A
+ S => ABC
  // A - beginning of sentence
  A => KMRC
  K => k
