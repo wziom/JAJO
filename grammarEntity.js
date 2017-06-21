@@ -31,7 +31,7 @@ var GrammarEntity = function (entityName, wordsArray, nextRequiredEntities, next
         textForValidation = text.trim().replace(',', '');
         var success = false;
 
-        // for each word in entity check if textForValidation starts with.
+        // for each "word" in entity check if textForValidation starts with "word".
         this.getWords().forEach( function (word) {
             if(textForValidation.match("^"+word)) {
                 validText += word + " ";
@@ -42,7 +42,7 @@ var GrammarEntity = function (entityName, wordsArray, nextRequiredEntities, next
             return true;
         });
 
-        // if there was found proper world in this entity, perform optionalPriorEntities
+        // if proper world in this entity was found, perform optionalPriorEntities
         if (success && this.getNextOptionalPriorEntities().length > 0) {
             this.getNextOptionalPriorEntities().forEach( function (NextEntity) {
                 var wordValidated = NextEntity.validateText(textForValidation, counter);
@@ -53,7 +53,7 @@ var GrammarEntity = function (entityName, wordsArray, nextRequiredEntities, next
             })
         }
 
-        // if there was found proper world in this entity, perform requiredEntities
+        // if proper world in this entity was found, perform requiredEntities
         if (success && this.getNextRequiredEntities().length > 0) {
             this.getNextRequiredEntities().forEach( function (NextEntity) {
                 var wordValidated = NextEntity.validateText(textForValidation, counter);
@@ -66,7 +66,7 @@ var GrammarEntity = function (entityName, wordsArray, nextRequiredEntities, next
             });
         }
 
-        // if there was found proper world in this entity, perform optionalPosteriorEntities
+        // if proper world in this entity was found, perform optionalPosteriorEntities
         if (success && this.getNextOptionalPosteriorEntities().length > 0) {
             this.getNextOptionalPosteriorEntities().forEach( function (NextEntity) {
                 var wordValidated = NextEntity.validateText(textForValidation, counter);
