@@ -24,6 +24,7 @@
  */
 var Grammar = function () {
     this.F = new GrammarEntity(
+        'F',
         [
             "pojawiają się",
             "występują",
@@ -31,53 +32,68 @@ var Grammar = function () {
             "będą",
             "są"
         ],
+        [],
+        [],
         []);
     this.E = new GrammarEntity(
+        'E',
         [
             "na której"
         ], [
             this.F
-        ]);
+        ],
+        [],
+        []);
     this.D = new GrammarEntity(
+        'D',
         [
             "będzie posiadała",
             "będzie miała",
             "posiada",
             "ma"
         ],
+        [],
+        [],
         []);
     this.B = new GrammarEntity(
+        'B',
         [
             "która"
         ],
         [
             this.D
-        ]);
+        ],
+        [],
+        []);
     this.R = new GrammarEntity(
+        'R',
         [
             "na"
         ],
+        [],
+        [],
+        []);
+    this.N = new GrammarEntity(
+        'N',
         [
-            this.B,
-            this.E
-        ]);
-    // this.N = new GrammarEntity(
-    //     [
-    //         100,
-    //         200,
-    //         300,
-    //         400,
-    //         500,
-    //         600,
-    //         700,
-    //         800,
-    //         900,
-    //         1000,
-    //         1100,
-    //         1200
-    //     ],
-    //     []);
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+            1000,
+            1100,
+            1200
+        ],
+        [],
+        [],
+        []);
     this.M = new GrammarEntity(
+        'M',
         [
             "planszę o wymiarach",
             "mapę o wymiarach",
@@ -85,32 +101,51 @@ var Grammar = function () {
             "mapę"
         ],
         [
-            this.R
+            this.N,
+            this.R,
+            this.N
+        ],
+        [],
+        [
+            this.B,
+            this.E
         ]);
     this.Z = new GrammarEntity(
+        'Z',
         [
             "mi",
             "dla mnie"
         ],
-        [
-            this.M
-        ]);
+        [],
+        [],
+        []);
     this.K = new GrammarEntity(
+        'K',
         [
             "Stwórz",
             "Utwórz",
             "Kreuj",
+            "Wykreuj",
             "Twórz"
         ],
         [
-            this.Z,
             this.M
-        ]);
+        ],
+        [
+            this.Z
+        ],
+        []);
 
     Grammar.prototype.validateText = function (text) {
-        console.log(this.K.validateText(text))
+        text = text.trim().replace(',' , '');
+        var counter = 0;
+        var validateText = this.K.validateText(text, counter).trim();
+        if (validateText == text) {
+            alert("Poprawnie zwalidowano text");
+        } else {
+            console.log(1, validateText);
+            console.log(2, text);
+            alert("Niepoprawne polecenie!")
+        }
     };
-
-
-    // console.log(this);
 };

@@ -1,38 +1,79 @@
 /**
  * Created by Ziomek on 19.06.2017.
  */
-var GrammarEntity = function (wordsArray, nextEntities) {
+var GrammarEntity = function (entityName, wordsArray, nextRequiredEntities, nextOptionalPriorEntities, nextOptionalPosteriorEntities) {
+    this.entityName = entityName;
     this.words = wordsArray;
-    this.nextEntities = nextEntities;
+    this.nextRequiredEntities = nextRequiredEntities;
+    this.nextOptionalPriorEntities = nextOptionalPriorEntities;
+    this.nextOptionalPosteriorEntities = nextOptionalPosteriorEntities;
 
     GrammarEntity.prototype.getWords = function() {
         return this.words;
     };
 
-    GrammarEntity.prototype.getNextEntities = function() {
-        return this.nextEntities;
+    GrammarEntity.prototype.getNextRequiredEntities = function () {
+        return this.nextRequiredEntities;
     };
 
-    GrammarEntity.prototype.validateText = function(text) {
-        var arrayText = text.split(" ");
-        var validText = "";
-        var textForValidation = text.trim();
+    GrammarEntity.prototype.getNextOptionalPriorEntities = function () {
+        return this.nextOptionalPriorEntities;
+    };
 
-        var success = true;
+    GrammarEntity.prototype.getNextOptionalPosteriorEntities = function () {
+        return this.nextOptionalPosteriorEntities;
+    };
+
+    GrammarEntity.prototype.validateText = function(text, counter) {
+        counter += 1;
+        var validText = "";
+
+        textForValidation = text.trim().replace(',', '');
+        var success = false;
+
+        // for each word in entity check if textForValidation starts with.
         this.getWords().forEach( function (word) {
             if(textForValidation.match("^"+word)) {
                 validText += word + " ";
                 textForValidation = textForValidation.replace(word, '').trim();
                 success = true;
-                return validText;
+                return false;
             }
-            success = false;
-            return validText;
+            return true;
         });
 
-        if (success && this.getNextEntities().length > 0) {
-            this.getNextEntities().forEach( function (NextEntity) {
-                validText += NextEntity.validateText(textForValidation);
+        // if there was found proper world in this entity, perform optionalPriorEntities
+        if (success && this.getNextOptionalPriorEntities().length > 0) {
+            this.getNextOptionalPriorEntities().forEach( function (NextEntity) {
+                var wordValidated = NextEntity.validateText(textForValidation, counter);
+                if (wordValidated.length > 0) {
+                    validText += wordValidated;
+                    textForValidation = textForValidation.replace(wordValidated, '').trim();
+                }
+            })
+        }
+
+        // if there was found proper world in this entity, perform requiredEntities
+        if (success && this.getNextRequiredEntities().length > 0) {
+            this.getNextRequiredEntities().forEach( function (NextEntity) {
+                var wordValidated = NextEntity.validateText(textForValidation, counter);
+                if (wordValidated.length > 0) {
+                    validText += wordValidated;
+                    textForValidation = textForValidation.replace(wordValidated, '').trim();
+                } else {
+                    validText += '!@#$%^&*()';
+                }
+            });
+        }
+
+        // if there was found proper world in this entity, perform optionalPosteriorEntities
+        if (success && this.getNextOptionalPosteriorEntities().length > 0) {
+            this.getNextOptionalPosteriorEntities().forEach( function (NextEntity) {
+                var wordValidated = NextEntity.validateText(textForValidation, counter);
+                if (wordValidated.length > 0) {
+                    validText += wordValidated;
+                    textForValidation = textForValidation.replace(wordValidated, '').trim();
+                }
             })
         }
         return validText;
