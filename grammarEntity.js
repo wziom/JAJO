@@ -1,6 +1,8 @@
 /**
  * Created by Ziomek on 19.06.2017.
  */
+ERROR_TEXT = 'W TEKSCIE BRAKUJE KLUCZOWEGO ZWROTU!!';
+
 var GrammarEntity = function (entityName, wordsArray, nextOptionalPriorEntities, nextRequiredEntities, nextRequiredUniqueEntities, nextOptionalPosteriorEntities) {
     this.entityName = entityName;
     this.words = wordsArray;
@@ -73,7 +75,7 @@ var GrammarEntity = function (entityName, wordsArray, nextOptionalPriorEntities,
                     validText += validationResult.validText;
                     textForValidation = textForValidation.replace(validationResult.validText, '').trim();
                 } else {
-                    validText += 'W TEKSCIE BRAKUJE KLUCZOWEGO ZWROTU!!';
+                    validText += ERROR_TEXT;
                 }
             });
         }
@@ -90,7 +92,7 @@ var GrammarEntity = function (entityName, wordsArray, nextOptionalPriorEntities,
                 }
             });
             if (!uniqueSuccess) {
-                validText += 'W TEKSCIE BRAKUJE KLUCZOWEGO ZWROTU!!';
+                validText += ERROR_TEXT;
             }
         }
 

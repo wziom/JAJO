@@ -26,6 +26,9 @@
  // C - map description
  C => CC
  */
+CORRECT_VALIDATION_TEXT = "Poprawnie zwalidowano text";
+INCORRECT_VALIDATION_TEXT = "Niepoprawne polecenie!";
+
 var Grammar = function () {
 
 
@@ -171,11 +174,11 @@ var Grammar = function () {
             console.log(matchedEntitiesInfo);
             console.log($.grep(matchedEntitiesInfo, function(e){ return e.entityMeaning == 'create'; }));
             console.log($.grep(matchedEntitiesInfo, function(e){ return e.entityMeaning == 'height'; }));
-            alert("Poprawnie zwalidowano text");
+            alert(CORRECT_VALIDATION_TEXT);
         } else {
             console.log(1, validateText);
             console.log(2, text);
-            alert("Niepoprawne polecenie!")
+            alert(INCORRECT_VALIDATION_TEXT);
         }
     };
 
