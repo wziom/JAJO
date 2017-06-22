@@ -92,18 +92,18 @@ var Grammar = function () {
     this.N = new GrammarEntity( // sets width and height
         'N',
         [
+            10,
+            20,
+            30,
+            40,
+            50,
+            60,
+            70,
+            80,
+            90,
             100,
-            200,
-            300,
-            400,
-            500,
-            600,
-            700,
-            800,
-            900,
-            1000,
-            1100,
-            1200
+            110,
+            120
         ],
         [],
         [],
@@ -171,14 +171,11 @@ var Grammar = function () {
         var matchedEntitiesInfo = [];
         var validateText = this.A.validateText(text, matchedEntitiesInfo, '').validText.trim();
         if (validateText == text) {
-            console.log(matchedEntitiesInfo);
-            console.log($.grep(matchedEntitiesInfo, function(e){ return e.entityMeaning == 'create'; }));
-            console.log($.grep(matchedEntitiesInfo, function(e){ return e.entityMeaning == 'height'; }));
-            alert(CORRECT_VALIDATION_TEXT);
+            return {error: 0, message: CORRECT_VALIDATION_TEXT, matchedEntitiesInfo: matchedEntitiesInfo};
         } else {
             console.log(1, validateText);
             console.log(2, text);
-            alert(INCORRECT_VALIDATION_TEXT);
+            return {error: 1, message: INCORRECT_VALIDATION_TEXT};
         }
     };
 
