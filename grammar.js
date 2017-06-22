@@ -7,22 +7,29 @@
  S => ABC
  // A - beginning of sentence
  A => KMRC
+ // K - create
  K => k
  K => kZ
+ // Z - conjunction
  Z => z
+ // M - subject
  M => m
- R => NrN
+ // R - size
+ R => NrN (???)
+ // N - size number
  N => n
- C => BD
- C => EF
- B => b
- D => d
+ // B - sentence follows
+ B => bD
+ B => EF
  E => e
  F => f
- // B - sentence follows
- B =>
+ // C - map description
+ C => CC
  */
 var Grammar = function () {
+
+
+    // A-group grammarEntities
     this.F = new GrammarEntity(
         'F',
         [
@@ -34,15 +41,18 @@ var Grammar = function () {
         ],
         [],
         [],
+        [],
         []);
     this.E = new GrammarEntity(
         'E',
         [
             "na której"
-        ], [
-            this.F
         ],
         [],
+        [],
+        [
+            {entity: this.F, entityMeaning: ''}
+        ],
         []);
     this.D = new GrammarEntity(
         'D',
@@ -54,14 +64,16 @@ var Grammar = function () {
         ],
         [],
         [],
+        [],
         []);
     this.B = new GrammarEntity(
         'B',
         [
             "która"
         ],
+        [],
         [
-            this.D
+            {entity: this.D, entityMeaning: ''}
         ],
         [],
         []);
@@ -72,8 +84,9 @@ var Grammar = function () {
         ],
         [],
         [],
+        [],
         []);
-    this.N = new GrammarEntity(
+    this.N = new GrammarEntity( // sets width and height
         'N',
         [
             100,
@@ -91,8 +104,9 @@ var Grammar = function () {
         ],
         [],
         [],
+        [],
         []);
-    this.M = new GrammarEntity(
+    this.M = new GrammarEntity( // create default map
         'M',
         [
             "planszę o wymiarach",
@@ -100,22 +114,21 @@ var Grammar = function () {
             "planszę",
             "mapę"
         ],
-        [
-            this.N,
-            this.R,
-            this.N
-        ],
         [],
         [
-            this.B,
-            this.E
-        ]);
+            {entity: this.N, entityMeaning: 'width'},
+            {entity: this.R, entityMeaning: 'sizeConnector'},
+            {entity: this.N, entityMeaning: 'height'}
+        ],
+        [],
+        []);
     this.Z = new GrammarEntity(
         'Z',
         [
             "mi",
             "dla mnie"
         ],
+        [],
         [],
         [],
         []);
@@ -128,19 +141,36 @@ var Grammar = function () {
             "Wykreuj",
             "Twórz"
         ],
+        [],
         [
-            this.M
+            {entity: this.M, entityMeaning: 'create'}
         ],
+        [],
         [
-            this.Z
+            {entity: this.Z, entityMeaning: ''}
+        ]);
+    this.A = new GrammarEntity(
+        'A',
+        [],
+        [],
+        [
+            {entity: this.K, entityMeaning: ''}
         ],
-        []);
+        [],
+        [
+            {entity: this.B, entityMeaning: 'connect'},
+            {entity: this.E, entityMeaning: 'compose'}
+        ]
+    );
 
     Grammar.prototype.validateText = function (text) {
         text = text.trim().replace(',' , '');
-        var counter = 0;
-        var validateText = this.K.validateText(text, counter).trim();
+        var matchedEntitiesInfo = [];
+        var validateText = this.A.validateText(text, matchedEntitiesInfo, '').validText.trim();
         if (validateText == text) {
+            console.log(matchedEntitiesInfo);
+            console.log($.grep(matchedEntitiesInfo, function(e){ return e.entityMeaning == 'create'; }));
+            console.log($.grep(matchedEntitiesInfo, function(e){ return e.entityMeaning == 'height'; }));
             alert("Poprawnie zwalidowano text");
         } else {
             console.log(1, validateText);
@@ -148,4 +178,6 @@ var Grammar = function () {
             alert("Niepoprawne polecenie!")
         }
     };
+
+    // todo: find in assoc array: $.grep(data, function(e){ return e.target == target; })
 };

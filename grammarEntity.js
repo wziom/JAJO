@@ -1,81 +1,109 @@
 /**
  * Created by Ziomek on 19.06.2017.
  */
-var GrammarEntity = function (entityName, wordsArray, nextRequiredEntities, nextOptionalPriorEntities, nextOptionalPosteriorEntities) {
+var GrammarEntity = function (entityName, wordsArray, nextOptionalPriorEntities, nextRequiredEntities, nextRequiredUniqueEntities, nextOptionalPosteriorEntities) {
     this.entityName = entityName;
     this.words = wordsArray;
-    this.nextRequiredEntities = nextRequiredEntities;
     this.nextOptionalPriorEntities = nextOptionalPriorEntities;
+    this.nextRequiredEntities = nextRequiredEntities;
+    this.nextRequiredUniqueEntities = nextRequiredUniqueEntities;
     this.nextOptionalPosteriorEntities = nextOptionalPosteriorEntities;
 
     GrammarEntity.prototype.getWords = function() {
         return this.words;
     };
 
+    GrammarEntity.prototype.getNextOptionalPriorEntities = function () {
+        return this.nextOptionalPriorEntities;
+    };
+
     GrammarEntity.prototype.getNextRequiredEntities = function () {
         return this.nextRequiredEntities;
     };
 
-    GrammarEntity.prototype.getNextOptionalPriorEntities = function () {
-        return this.nextOptionalPriorEntities;
+    GrammarEntity.prototype.getNextRequiredUniqueEntities = function () {
+        return this.nextRequiredUniqueEntities;
     };
 
     GrammarEntity.prototype.getNextOptionalPosteriorEntities = function () {
         return this.nextOptionalPosteriorEntities;
     };
 
-    GrammarEntity.prototype.validateText = function(text, counter) {
-        counter += 1;
+    GrammarEntity.prototype.validateText = function(text, matchedEntitiesInfo, entityMeaning) {
         var validText = "";
 
         textForValidation = text.trim().replace(',', '');
         var success = false;
 
-        // for each "word" in entity check if textForValidation starts with "word".
-        this.getWords().forEach( function (word) {
-            if(textForValidation.match("^"+word)) {
-                validText += word + " ";
-                textForValidation = textForValidation.replace(word, '').trim();
-                success = true;
-                return false;
-            }
-            return true;
-        });
+        if (this.getWords().length > 0) {
+            // for each "word" in entity check if textForValidation starts with "word".
+            this.getWords().forEach(function (word) {
+                if (textForValidation.match("^" + word)) {
+                    validText += word + " ";
+                    textForValidation = textForValidation.replace(word, '').trim();
+                    matchedEntitiesInfo.push({entityMeaning: entityMeaning, entityValue: word});
+
+                    success = true;
+                    return false;
+                }
+                return true;
+            });
+        } else {
+            success = true;
+        }
 
         // if proper world in this entity was found, perform optionalPriorEntities
         if (success && this.getNextOptionalPriorEntities().length > 0) {
-            this.getNextOptionalPriorEntities().forEach( function (NextEntity) {
-                var wordValidated = NextEntity.validateText(textForValidation, counter);
-                if (wordValidated.length > 0) {
-                    validText += wordValidated;
-                    textForValidation = textForValidation.replace(wordValidated, '').trim();
+            console.log(this.getNextOptionalPriorEntities())
+            this.getNextOptionalPriorEntities().forEach( function (NextEntityInfo) {
+                console.log(NextEntityInfo);
+                var validationResult = NextEntityInfo.entity.validateText(textForValidation, matchedEntitiesInfo, NextEntityInfo.entityMeaning);
+                if (validationResult.validText.length > 0) {
+                    validText += validationResult.validText;
+                    textForValidation = textForValidation.replace(validationResult.validText, '').trim();
                 }
             })
         }
 
         // if proper world in this entity was found, perform requiredEntities
         if (success && this.getNextRequiredEntities().length > 0) {
-            this.getNextRequiredEntities().forEach( function (NextEntity) {
-                var wordValidated = NextEntity.validateText(textForValidation, counter);
-                if (wordValidated.length > 0) {
-                    validText += wordValidated;
-                    textForValidation = textForValidation.replace(wordValidated, '').trim();
+            this.getNextRequiredEntities().forEach( function (NextEntityInfo) {
+                var validationResult = NextEntityInfo.entity.validateText(textForValidation, matchedEntitiesInfo, NextEntityInfo.entityMeaning);
+                if (validationResult.validText.length > 0) {
+                    validText += validationResult.validText;
+                    textForValidation = textForValidation.replace(validationResult.validText, '').trim();
                 } else {
-                    validText += '!@#$%^&*()';
+                    validText += 'W TEKSCIE BRAKUJE KLUCZOWEGO ZWROTU!!';
                 }
             });
         }
 
+        // if proper world in this entity was found, perform requiredEntities
+        if (success && this.getNextRequiredUniqueEntities().length > 0) {
+            uniqueSuccess = false;
+            this.getNextRequiredUniqueEntities().forEach( function (NextEntityInfo) {
+                var validationResult = NextEntityInfo.entity.validateText(textForValidation, matchedEntitiesInfo, NextEntityInfo.entityMeaning);
+                if (validationResult.validText.length > 0 && !uniqueSuccess) {
+                    validText += validationResult.validText;
+                    textForValidation = textForValidation.replace(validationResult.validText, '').trim();
+                    uniqueSuccess = true;
+                }
+            });
+            if (!uniqueSuccess) {
+                validText += 'W TEKSCIE BRAKUJE KLUCZOWEGO ZWROTU!!';
+            }
+        }
+
         // if proper world in this entity was found, perform optionalPosteriorEntities
         if (success && this.getNextOptionalPosteriorEntities().length > 0) {
-            this.getNextOptionalPosteriorEntities().forEach( function (NextEntity) {
-                var wordValidated = NextEntity.validateText(textForValidation, counter);
-                if (wordValidated.length > 0) {
-                    validText += wordValidated;
-                    textForValidation = textForValidation.replace(wordValidated, '').trim();
+            this.getNextOptionalPosteriorEntities().forEach( function (NextEntityInfo) {
+                var validationResultData = NextEntityInfo.entity.validateText(textForValidation, matchedEntitiesInfo, NextEntityInfo.entityMeaning);
+                if (validationResultData.validText.length > 0) {
+                    validText += validationResult.validText;
+                    textForValidation = textForValidation.replace(validationResult.validText, '').trim();
                 }
             })
         }
-        return validText;
+        return {validText: validText, matchedEntitiesInfo: matchedEntitiesInfo};
     };
 };
