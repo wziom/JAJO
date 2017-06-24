@@ -50,16 +50,16 @@ var Grammar = function () {
     this.L = new GrammarEntity(
         'L',
         [
-            {wordText: 'u góry', wordMeaning: 'up'},
             {wordText: 'na środku', wordMeaning: 'middle'},
+            {wordText: 'u góry', wordMeaning: 'up'},
             {wordText: 'na dole', wordMeaning: 'down'}
         ], [], [], [], [], []
     );
     this.J = new GrammarEntity(
         'J',
         [
-            {wordText: 'po lewej', wordMeaning: 'left'},
             {wordText: 'na środku', wordMeaning: 'middle'},
+            {wordText: 'po lewej', wordMeaning: 'left'},
             {wordText: 'po prawej', wordMeaning: 'right'}
         ], [],
         [
