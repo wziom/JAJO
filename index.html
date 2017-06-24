@@ -20,7 +20,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <textarea id="map_description" class="form-control">Stwórz planszę 40 na 40</textarea>
+        <textarea id="map_description" class="form-control">Stwórz planszę 40 na 40 która ma krótką platformę po prawej u góry średnią platformę na środku u góry długą platformę po lewej u góry</textarea>
       </div>
       <div class="col-md-6">
         <canvas id="canvas"></canvas>
@@ -44,7 +44,9 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6"></div>
+      <div class="col-md-6">
+        <strong id="current_map_description"></strong>
+      </div>
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-1 col-md-offset-2">
@@ -257,16 +259,20 @@
         if(key.which == 13) {
           var textToValidate = $(this).val();
           var validationResult = dictionary.validateText(textToValidate);
-  //        alert(validationResult.message);
+          console.log(validationResult.message);
           console.log(validationResult);
           if (!validationResult.error){
+            console.log('matchedEntitiesInfo', validationResult.matchedEntitiesInfo);
+            $('#current_map_description').html(textToValidate);
             var mapData = codeBuilder.getMapMatrix(validationResult.matchedEntitiesInfo);
             console.log(mapData);
   //          canvas.width = mapData.width;
   //          canvas.height = mapData.height;
-            map.data = mapData.mapMatrix
+            map.data = mapData.mapMatrix;
             game.load_map(map);
             Loop();
+          } else {
+            $('#current_map_description').html("<em class='text-danger'>"+validationResult.message +"</em>");
           }
         }
       });
