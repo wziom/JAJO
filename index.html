@@ -20,7 +20,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <textarea id="map_description" class="form-control">Stwórz planszę 40 na 40, która ma średnią platformę po lewej na środku</textarea>
+        <textarea id="map_description" class="form-control">Stwórz planszę 40 na 40, która ma średnią platformę na środku u góry, długą platformę po lewej u góry, średnią ścianę po prawej na środku, średnią platformę na środku na środku, krótką ścianę po prawej na dole, średnią platformę na środku na dole, długą ścianę po lewej na dole</textarea>
       </div>
       <div class="col-md-6">
         <canvas id="canvas"></canvas>
@@ -260,19 +260,14 @@
           var textToValidate = $(this).val();
           var validationResult = dictionary.validateText(textToValidate);
           console.log(validationResult.message);
-          console.log(validationResult);
           if (!validationResult.error){
-            console.log('matchedEntitiesInfo', validationResult.matchedEntitiesInfo);
-            $('#current_map_description').html(textToValidate);
+            $('#current_map_description').html("<small>Twoje polecenie: <br /><em>"+textToValidate+"</em></small>");
             var mapData = codeBuilder.getMapMatrix(validationResult.matchedEntitiesInfo);
-            console.log(mapData);
-  //          canvas.width = mapData.width;
-  //          canvas.height = mapData.height;
             map.data = mapData.mapMatrix;
             game.load_map(map);
             Loop();
           } else {
-            $('#current_map_description').html("<em class='text-danger'>"+validationResult.message +"</em>");
+            $('#current_map_description').html("<em class='text-danger'>"+validationResult.message +"</em><br /><small>Twoje polecenie: <br /><em>"+validationResult.user_sentence+"</em></small><br/><br/><small>Poprawnie zwalidowany fragment: <br /><em>"+sessionStorage.validateText+"</em></small>");
           }
         }
       });

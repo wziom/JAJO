@@ -227,7 +227,7 @@ var Grammar = function () {
         } else {
             console.log('validated sentence:', sessionStorage.validateText);
             console.log('user sentence:', text);
-            return {error: 1, message: INCORRECT_VALIDATION_TEXT};
+            return {error: 1, message: INCORRECT_VALIDATION_TEXT, user_sentence: text};
         }
     };
 

@@ -1,7 +1,7 @@
 /**
  * Created by Ziomek on 19.06.2017.
  */
-ERROR_TEXT = 'W TEKSCIE BRAKUJE KLUCZOWEGO ZWROTU!!';
+ERROR_TEXT = '<br /><em class="text-danger">W TEKSCIE BRAKUJE KLUCZOWEGO ZWROTU!!</em>';
 
 var GrammarEntity = function (
     entityName,
