@@ -35,179 +35,43 @@ var CodeBuilder = function () {
                     // make the frame
                     if (height == 0 || width == 0 || height == mapHeight -1 || width == mapWidth -1) {
                         row.push(2);
-                    }
-                    // build first window platforms
-                    else if (height == Math.round(mapHeight/6) &&
-                        elementsMapPlacementArray[0][0].elementType == 'platform'  &&
-                        width > 0 &&
-                        width < mapWidth/3
-                    ) {
-                        if (elementsMapPlacementArray[0][0].elementLength == 'long' && width > 0 && width < mapWidth/3) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[0][0].elementLength == 'medium' && width > mapWidth/18 && width < 5 * mapWidth/18) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[0][0].elementLength == 'short' && width > mapWidth/9 && width < 2 * mapWidth/9) {
-                            row.push(2);
-                        }
-                        else {
-                            row.push(1);
-                        }
-                    }
-                    // build second window platforms
-                    else if (height == Math.round(mapHeight/6) &&
-                        elementsMapPlacementArray[0][1].elementType == 'platform' &&
-                        width > mapWidth/3 &&
-                        width < 2*mapWidth/3
-                    ) {
-                        if (elementsMapPlacementArray[0][1].elementLength == 'long' && width > mapWidth/3 && width < 2 * mapWidth/3) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[0][1].elementLength == 'medium' && width > 7 * mapWidth/18 && width < 11 * mapWidth/18) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[0][1].elementLength == 'short' && width > 4 * mapWidth/9 && width < 5 * mapWidth/9) {
-                            row.push(2);
-                        }
-                        else {
-                            row.push(1);
-                        }
-                    }
-                    // build third window platforms
-                    else if (height == Math.round(mapHeight/6) &&
-                        elementsMapPlacementArray[0][2].elementType == 'platform' &&
-                        width > 2 * mapWidth/3 &&
-                        width < mapWidth
-                    ) {
-                        if (elementsMapPlacementArray[0][2].elementLength == 'long' && width > 2 * mapWidth/3 && width < mapWidth) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[0][2].elementLength == 'medium' && width > 13 * mapWidth/18 && width < 17 * mapWidth/18) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[0][2].elementLength == 'short' && width > 7 * mapWidth/9 && width < 8 * mapWidth/9) {
-                            row.push(2);
-                        }
-                        else {
-                            row.push(1);
-                        }
-                    }
-                    // build fourth window platforms
-                    else if (height == Math.round(mapHeight/2) &&
-                        elementsMapPlacementArray[1][0].elementType == 'platform'  &&
-                        width > 0 &&
-                        width < mapWidth/3
-                    ) {
-                        if (elementsMapPlacementArray[1][0].elementLength == 'long' && width > 0 && width < mapWidth/3) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[1][0].elementLength == 'medium' && width > mapWidth/18 && width < 5 * mapWidth/18) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[1][0].elementLength == 'short' && width > mapWidth/9 && width < 2 * mapWidth/9) {
-                            row.push(2);
-                        }
-                        else {
-                            row.push(1);
-                        }
-                    }
-                    // build fifth window platforms
-                    else if (height == Math.round(mapHeight/2) &&
-                        elementsMapPlacementArray[1][1].elementType == 'platform' &&
-                        width > mapWidth/3 &&
-                        width < 2*mapWidth/3
-                    ) {
-                        if (elementsMapPlacementArray[1][1].elementLength == 'long' && width > mapWidth/3 && width < 2 * mapWidth/3) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[1][1].elementLength == 'medium' && width > 7 * mapWidth/18 && width < 11 * mapWidth/18) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[1][1].elementLength == 'short' && width > 4 * mapWidth/9 && width < 5 * mapWidth/9) {
-                            row.push(2);
-                        }
-                        else {
-                            row.push(1);
-                        }
-                    }
-                    // build sixth window platforms
-                    else if (height == Math.round(mapHeight/2) &&
-                        elementsMapPlacementArray[1][2].elementType == 'platform' &&
-                        width > 2 * mapWidth/3 &&
-                        width < mapWidth
-                    ) {
-                        if (elementsMapPlacementArray[1][2].elementLength == 'long' && width > 2 * mapWidth/3 && width < mapWidth) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[1][2].elementLength == 'medium' && width > 13 * mapWidth/18 && width < 17 * mapWidth/18) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[1][2].elementLength == 'short' && width > 7 * mapWidth/9 && width < 8 * mapWidth/9) {
-                            row.push(2);
-                        }
-                        else {
-                            row.push(1);
-                        }
-                    }
-                    // build seventh window platforms
-                    else if (height == Math.round(5*mapHeight/6) &&
-                        elementsMapPlacementArray[2][0].elementType == 'platform'  &&
-                        width > 0 &&
-                        width < mapWidth/3
-                    ) {
-                        if (elementsMapPlacementArray[2][0].elementLength == 'long' && width > 0 && width < mapWidth/3) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[2][0].elementLength == 'medium' && width > mapWidth/18 && width < 5 * mapWidth/18) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[2][0].elementLength == 'short' && width > mapWidth/9 && width < 2 * mapWidth/9) {
-                            row.push(2);
-                        }
-                        else {
-                            row.push(1);
-                        }
-                    }
-                    // build fifth window platforms
-                    else if (height == Math.round(5*mapHeight/6) &&
-                        elementsMapPlacementArray[2][1].elementType == 'platform' &&
-                        width > mapWidth/3 &&
-                        width < 2*mapWidth/3
-                    ) {
-                        if (elementsMapPlacementArray[2][1].elementLength == 'long' && width > mapWidth/3 && width < 2 * mapWidth/3) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[2][1].elementLength == 'medium' && width > 7 * mapWidth/18 && width < 11 * mapWidth/18) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[2][1].elementLength == 'short' && width > 4 * mapWidth/9 && width < 5 * mapWidth/9) {
-                            row.push(2);
-                        }
-                        else {
-                            row.push(1);
-                        }
-                    }
-                    // build sixth window platforms
-                    else if (height == Math.round(5*mapHeight/6) &&
-                        elementsMapPlacementArray[2][2].elementType == 'platform' &&
-                        width > 2 * mapWidth/3 &&
-                        width < mapWidth
-                    ) {
-                        if (elementsMapPlacementArray[2][2].elementLength == 'long' && width > 2 * mapWidth/3 && width < mapWidth) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[2][2].elementLength == 'medium' && width > 13 * mapWidth/18 && width < 17 * mapWidth/18) {
-                            row.push(2);
-                        }
-                        else if (elementsMapPlacementArray[2][2].elementLength == 'short' && width > 7 * mapWidth/9 && width < 8 * mapWidth/9) {
-                            row.push(2);
-                        }
-                        else {
-                            row.push(1);
-                        }
-                    }
-                    else {
+                    } else if (isPlatformDefined(width, height, 0, 0)) {
+                        row.push(getPlatformTileNumber(width, 0, 0));
+                    } else if (isPlatformDefined(width, height, 0, 1)) {
+                        row.push(getPlatformTileNumber(width, 0, 1));
+                    } else if (isPlatformDefined(width, height, 0, 2)) {
+                        row.push(getPlatformTileNumber(width, 0, 2));
+                    } else if (isPlatformDefined(width, height, 1, 0)) {
+                        row.push(getPlatformTileNumber(width, 1, 0));
+                    } else if (isPlatformDefined(width, height, 1, 1)) {
+                        row.push(getPlatformTileNumber(width, 1, 1));
+                    } else if (isPlatformDefined(width, height, 1, 2)) {
+                        row.push(getPlatformTileNumber(width, 1, 2));
+                    } else if (isPlatformDefined(width, height, 2, 0)) {
+                        row.push(getPlatformTileNumber(width, 2, 0));
+                    } else if (isPlatformDefined(width, height, 2, 1)) {
+                        row.push(getPlatformTileNumber(width, 2, 1));
+                    } else if (isPlatformDefined(width, height, 2, 2)) {
+                        row.push(getPlatformTileNumber(width, 2, 2));
+                    } else if (isWallDefined(width, height, 0, 0)) {
+                        row.push(getWallTileNumber(height, 0, 0));
+                    } else if (isWallDefined(width, height, 0, 1)) {
+                        row.push(getWallTileNumber(height, 0, 1));
+                    } else if (isWallDefined(width, height, 0, 2)) {
+                        row.push(getWallTileNumber(height, 0, 2));
+                    } else if (isWallDefined(width, height, 1, 0)) {
+                        row.push(getWallTileNumber(height, 1, 0));
+                    } else if (isWallDefined(width, height, 1, 1)) {
+                        row.push(getWallTileNumber(height, 1, 1));
+                    } else if (isWallDefined(width, height, 1, 2)) {
+                        row.push(getWallTileNumber(height, 1, 2));
+                    } else if (isWallDefined(width, height, 2, 0)) {
+                        row.push(getWallTileNumber(height, 2, 0));
+                    } else if (isWallDefined(width, height, 2, 1)) {
+                        row.push(getWallTileNumber(height, 2, 1));
+                    } else if (isWallDefined(width, height, 2, 2)) {
+                        row.push(getWallTileNumber(height, 2, 2));
+                    } else {
                         row.push(1);
                     }
                 }
@@ -253,5 +117,98 @@ var CodeBuilder = function () {
             });
         }
 
+        /**
+         * @param width
+         * @param height
+         * @param rowNumber int 0, 1 or 2
+         * @param columnNumber int 0, 1 or 2
+         * @returns {boolean}
+         */
+        function isPlatformDefined(width, height, rowNumber, columnNumber) {
+            var platformHeight = mapHeight/5;
+            switch (rowNumber) {
+                case 0:
+                    platformHeight = mapHeight/5;
+                    break;
+                case 1:
+                    platformHeight = mapHeight/2;
+                    break;
+                case 2:
+                    platformHeight = 4*mapHeight/5;
+                    break;
+            }
+            return height == Math.round(platformHeight) &&
+                elementsMapPlacementArray[rowNumber][columnNumber].elementType == 'platform'  &&
+                width > columnNumber * (mapWidth/3) &&
+                width < (columnNumber + 1) * mapWidth/3
+        };
+
+        /**
+         * @param width
+         * @param height
+         * @param rowNumber int 0, 1 or 2
+         * @param columnNumber int 0, 1 or 2
+         * @returns {boolean}
+         */
+        function isWallDefined(width, height, rowNumber, columnNumber) {
+            var wallWidth = mapWidth/5;
+            switch (columnNumber) {
+                case 0:
+                    wallWidth = mapWidth/5;
+                    break;
+                case 1:
+                    wallWidth = mapWidth/2;
+                    break;
+                case 2:
+                    wallWidth = 4*mapWidth/5;
+                    break;
+            }
+            return width == Math.round(wallWidth) &&
+                elementsMapPlacementArray[rowNumber][columnNumber].elementType == 'wall'  &&
+                height > rowNumber * (mapHeight/3) &&
+                height < (rowNumber + 1) * mapHeight/3
+        };
+
+        function getPlatformTileNumber(width, rowNumber, columnNumber) {
+            var longMinLimit = columnNumber * (mapWidth/3);
+            var longMaxLimit = (columnNumber + 1) * mapWidth/3;
+            var mediumMinLimit = columnNumber * (mapWidth/3) + mapWidth/18;
+            var mediumMaxLimit = columnNumber * (mapWidth/3) + 5 * mapWidth/18;
+            var shortMinLimit = columnNumber * (mapWidth/3) + mapWidth/9;
+            var shortMaxLimit = columnNumber * (mapWidth/3) + 2 * mapWidth/9;
+            if (elementsMapPlacementArray[rowNumber][columnNumber].elementLength == 'long' && width > longMinLimit && width < longMaxLimit) {
+                return 2;
+            }
+            else if (elementsMapPlacementArray[rowNumber][columnNumber].elementLength == 'medium' && width > mediumMinLimit && width < mediumMaxLimit) {
+                return 2;
+            }
+            else if (elementsMapPlacementArray[rowNumber][columnNumber].elementLength == 'short' && width > shortMinLimit && width < shortMaxLimit) {
+                return 2;
+            }
+            else {
+                return 1;
+            }
+        };
+
+        function getWallTileNumber(height, rowNumber, columnNumber) {
+            var longMinLimit = rowNumber * (mapHeight/3);
+            var longMaxLimit = (rowNumber + 1) * mapHeight/3;
+            var mediumMinLimit = rowNumber * (mapHeight/3) + mapHeight/18;
+            var mediumMaxLimit = rowNumber * (mapHeight/3) + 5 * mapHeight/18;
+            var shortMinLimit = rowNumber * (mapHeight/3) + mapHeight/9;
+            var shortMaxLimit = rowNumber * (mapHeight/3) + 2 * mapHeight/9;
+            if (elementsMapPlacementArray[rowNumber][columnNumber].elementLength == 'long' && height > longMinLimit && height < longMaxLimit) {
+                return 2;
+            }
+            else if (elementsMapPlacementArray[rowNumber][columnNumber].elementLength == 'medium' && height > mediumMinLimit && height < mediumMaxLimit) {
+                return 2;
+            }
+            else if (elementsMapPlacementArray[rowNumber][columnNumber].elementLength == 'short' && height > shortMinLimit && height < shortMaxLimit) {
+                return 2;
+            }
+            else {
+                return 1;
+            }
+        }
     }
 }
