@@ -28,7 +28,6 @@ var CodeBuilder = function () {
                 mapWidth = widthObj.entityValue;
             }
 
-            console.log(elementsMapPlacementArray);
             for (var height = 0; height < mapHeight; height++) {
                 var row = [];
                 for (var width = 0; width < mapWidth; width++) {
@@ -104,7 +103,6 @@ var CodeBuilder = function () {
             elementsArray = [];
             matchedEntitiesInfo.forEach(function (element) {
                 if (element.entityMeaning.indexOf("element") >= 0) {
-                    console.log(element.mapsElementNumber, element.entityMeaning, element.entityValue);
                     if (typeof elementsArray[element.mapsElementNumber] == 'undefined') {
                         elementsArray[element.mapsElementNumber] = [];
                     }

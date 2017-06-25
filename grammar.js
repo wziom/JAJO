@@ -216,7 +216,7 @@ var Grammar = function () {
     );
 
     Grammar.prototype.validateText = function (text) {
-        sessionStorage.textForValidation = text = text.trim().replace(/,/g , '').replace(/\n/g, " ");
+        sessionStorage.textForValidation = text = text.trim().replace(/,/g , '').replace('.' , '').replace(/\s\s+/g, ' ');
         sessionStorage.mapsElementsCounter = 0;
         sessionStorage.matchedEntitiesInfo = JSON.stringify([]);
         sessionStorage.validateText = '';
@@ -225,8 +225,6 @@ var Grammar = function () {
         if (sessionStorage.validateText == text) {
             return {error: 0, message: CORRECT_VALIDATION_TEXT, matchedEntitiesInfo: JSON.parse(sessionStorage.matchedEntitiesInfo)};
         } else {
-            console.log('validated sentence:', sessionStorage.validateText);
-            console.log('user sentence:', text);
             return {error: 1, message: INCORRECT_VALIDATION_TEXT, user_sentence: text};
         }
     };
