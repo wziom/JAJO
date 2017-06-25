@@ -79,9 +79,11 @@ var GrammarEntity = function (
 
         function validWordsOfThisEntity() {
             if (this.getWords().length > 0) {
+                var innerSuccess = false;
                 // for each "word" in entity check if textForValidation starts with "word".
                 this.getWords().forEach(function (word) {
-                    if (sessionStorage.textForValidation.match("^" + word.wordText)) {
+                    if (sessionStorage.textForValidation.match("^" + word.wordText) && !innerSuccess) {
+                        innerSuccess = true;
                         sessionStorage.validateText += word.wordText + " ";
                         validText += word.wordText + " ";
                         sessionStorage.textForValidation = sessionStorage.textForValidation.substring(word.wordText.length, sessionStorage.textForValidation.length).trim();
