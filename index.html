@@ -207,7 +207,7 @@
             game.load_map(map);
             Loop();
           } else {
-            $('#current_map_description').html("<em class='text-danger'>"+validationResult.message +"</em><br /><small>Twoje polecenie: <br /><em>"+validationResult.user_sentence+"</em></small><br/><br/><small>Poprawnie zwalidowany fragment: <br /><em>"+sessionStorage.validateText+"</em></small>");
+            $('#current_map_description').html("<em class='text-danger'>"+validationResult.message +"</em><br /><small>Twoje polecenie: <br /><em>"+validationResult.userSentence+"</em></small><br/><br/><small>Poprawnie zwalidowany fragment: <br /><em>"+sessionStorage.validateText+"</em></small>");
           }
         }
       });

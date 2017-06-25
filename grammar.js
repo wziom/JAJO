@@ -42,6 +42,8 @@
  */
 CORRECT_VALIDATION_TEXT = "Poprawnie zwalidowano text";
 INCORRECT_VALIDATION_TEXT = "Niepoprawne polecenie!";
+EMPTY_TEXT = "Nie można wygenerować planszy na podstawie pustego tekstu!!!";
+LACK_OF_TEXT = "BRAK TEKSTU";
 
 var Grammar = function () {
 
@@ -222,10 +224,12 @@ var Grammar = function () {
         sessionStorage.validateText = '';
         this.A.validateText('').validText.trim();
         sessionStorage.validateText = sessionStorage.validateText.trim();
-        if (sessionStorage.validateText == text) {
+        if (text.length < 1) {
+            return {error: 1, message: EMPTY_TEXT, userSentence: LACK_OF_TEXT}
+        } else if (sessionStorage.validateText == text) {
             return {error: 0, message: CORRECT_VALIDATION_TEXT, matchedEntitiesInfo: JSON.parse(sessionStorage.matchedEntitiesInfo)};
         } else {
-            return {error: 1, message: INCORRECT_VALIDATION_TEXT, user_sentence: text};
+            return {error: 1, message: INCORRECT_VALIDATION_TEXT, userSentence: text};
         }
     };
 
