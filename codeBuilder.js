@@ -15,8 +15,11 @@ var CodeBuilder = function () {
         var mapHeight = 400;
         var mapWidth = 400;
 
-        // elementsMapPlacementArray
-        generateElementsMapPlacementArray();
+        // platformsMapPlacementArray
+        generatePlatformsMapPlacementArray();
+
+        // columnsMapPlacementArray
+        generateColumnsMapPlacementArray();
 
         if (getElementFromMatchedEntitiesObject("create", matchedEntitiesInfo)){
             var heightObj = getElementFromMatchedEntitiesObject("height", matchedEntitiesInfo);
@@ -52,24 +55,24 @@ var CodeBuilder = function () {
                         row.push(getPlatformTileNumber(width, 2, 1));
                     } else if (isPlatformDefined(width, height, 2, 2)) {
                         row.push(getPlatformTileNumber(width, 2, 2));
-                    } else if (isWallDefined(width, height, 0, 0)) {
-                        row.push(getWallTileNumber(height, 0, 0));
-                    } else if (isWallDefined(width, height, 0, 1)) {
-                        row.push(getWallTileNumber(height, 0, 1));
-                    } else if (isWallDefined(width, height, 0, 2)) {
-                        row.push(getWallTileNumber(height, 0, 2));
-                    } else if (isWallDefined(width, height, 1, 0)) {
-                        row.push(getWallTileNumber(height, 1, 0));
-                    } else if (isWallDefined(width, height, 1, 1)) {
-                        row.push(getWallTileNumber(height, 1, 1));
-                    } else if (isWallDefined(width, height, 1, 2)) {
-                        row.push(getWallTileNumber(height, 1, 2));
-                    } else if (isWallDefined(width, height, 2, 0)) {
-                        row.push(getWallTileNumber(height, 2, 0));
-                    } else if (isWallDefined(width, height, 2, 1)) {
-                        row.push(getWallTileNumber(height, 2, 1));
-                    } else if (isWallDefined(width, height, 2, 2)) {
-                        row.push(getWallTileNumber(height, 2, 2));
+                    } else if (isColumnDefined(width, height, 0, 0)) {
+                        row.push(getColumnTileNumber(height, 0, 0));
+                    } else if (isColumnDefined(width, height, 0, 1)) {
+                        row.push(getColumnTileNumber(height, 0, 1));
+                    } else if (isColumnDefined(width, height, 0, 2)) {
+                        row.push(getColumnTileNumber(height, 0, 2));
+                    } else if (isColumnDefined(width, height, 1, 0)) {
+                        row.push(getColumnTileNumber(height, 1, 0));
+                    } else if (isColumnDefined(width, height, 1, 1)) {
+                        row.push(getColumnTileNumber(height, 1, 1));
+                    } else if (isColumnDefined(width, height, 1, 2)) {
+                        row.push(getColumnTileNumber(height, 1, 2));
+                    } else if (isColumnDefined(width, height, 2, 0)) {
+                        row.push(getColumnTileNumber(height, 2, 0));
+                    } else if (isColumnDefined(width, height, 2, 1)) {
+                        row.push(getColumnTileNumber(height, 2, 1));
+                    } else if (isColumnDefined(width, height, 2, 2)) {
+                        row.push(getColumnTileNumber(height, 2, 2));
                     } else {
                         row.push(1);
                     }
@@ -85,33 +88,67 @@ var CodeBuilder = function () {
             return greppedArray[0];
         }
 
-        function generateElementsMapPlacementArray() {
-            elementsMapPlacementArray = [];
-            elementsMapPlacementArray[0] = [];
-            elementsMapPlacementArray[1] = [];
-            elementsMapPlacementArray[2] = [];
-            elementsMapPlacementArray[0][0] = {elementType: 'no element', elementLength: 'no element'};
-            elementsMapPlacementArray[0][1] = {elementType: 'no element', elementLength: 'no element'};
-            elementsMapPlacementArray[0][2] = {elementType: 'no element', elementLength: 'no element'};
-            elementsMapPlacementArray[1][0] = {elementType: 'no element', elementLength: 'no element'};
-            elementsMapPlacementArray[1][1] = {elementType: 'no element', elementLength: 'no element'};
-            elementsMapPlacementArray[1][2] = {elementType: 'no element', elementLength: 'no element'};
-            elementsMapPlacementArray[2][0] = {elementType: 'no element', elementLength: 'no element'};
-            elementsMapPlacementArray[2][1] = {elementType: 'no element', elementLength: 'no element'};
-            elementsMapPlacementArray[2][2] = {elementType: 'no element', elementLength: 'no element'};
+        function generatePlatformsMapPlacementArray() {
+            platformsMapPlacementArray = [];
+            platformsMapPlacementArray[0] = [];
+            platformsMapPlacementArray[1] = [];
+            platformsMapPlacementArray[2] = [];
+            platformsMapPlacementArray[0][0] = {elementType: 'no element', elementLength: 'no element'};
+            platformsMapPlacementArray[0][1] = {elementType: 'no element', elementLength: 'no element'};
+            platformsMapPlacementArray[0][2] = {elementType: 'no element', elementLength: 'no element'};
+            platformsMapPlacementArray[1][0] = {elementType: 'no element', elementLength: 'no element'};
+            platformsMapPlacementArray[1][1] = {elementType: 'no element', elementLength: 'no element'};
+            platformsMapPlacementArray[1][2] = {elementType: 'no element', elementLength: 'no element'};
+            platformsMapPlacementArray[2][0] = {elementType: 'no element', elementLength: 'no element'};
+            platformsMapPlacementArray[2][1] = {elementType: 'no element', elementLength: 'no element'};
+            platformsMapPlacementArray[2][2] = {elementType: 'no element', elementLength: 'no element'};
 
-            elementsArray = [];
+            platformsArray = [];
             matchedEntitiesInfo.forEach(function (element) {
                 if (element.entityMeaning.indexOf("element") >= 0) {
-                    if (typeof elementsArray[element.mapsElementNumber] == 'undefined') {
-                        elementsArray[element.mapsElementNumber] = [];
+                    if (typeof platformsArray[element.mapsElementNumber] == 'undefined') {
+                        platformsArray[element.mapsElementNumber] = [];
                     }
-                    elementsArray[element.mapsElementNumber][element.entityMeaning] = element.entityValue;
+                    platformsArray[element.mapsElementNumber][element.entityMeaning] = element.entityValue;
                 }
             });
-            elementsArray.forEach(function (data, key) {
-                elementsMapPlacementArray[SIZES_COMPARISION_DICTIONARY[data.elementVerticalPlacement]][SIZES_COMPARISION_DICTIONARY[data.elementHorizontalPlacement]]
-                    = {elementType: data.elementType, elementLength: data.elementSize}
+            platformsArray.forEach(function (data, key) {
+                if (data.elementType == 'platform') {
+                    platformsMapPlacementArray[SIZES_COMPARISION_DICTIONARY[data.elementVerticalPlacement]][SIZES_COMPARISION_DICTIONARY[data.elementHorizontalPlacement]]
+                        = {elementType: data.elementType, elementLength: data.elementSize}
+                }
+            });
+        }
+
+        function generateColumnsMapPlacementArray() {
+            columnsMapPlacementArray = [];
+            columnsMapPlacementArray[0] = [];
+            columnsMapPlacementArray[1] = [];
+            columnsMapPlacementArray[2] = [];
+            columnsMapPlacementArray[0][0] = {elementType: 'no element', elementLength: 'no element'};
+            columnsMapPlacementArray[0][1] = {elementType: 'no element', elementLength: 'no element'};
+            columnsMapPlacementArray[0][2] = {elementType: 'no element', elementLength: 'no element'};
+            columnsMapPlacementArray[1][0] = {elementType: 'no element', elementLength: 'no element'};
+            columnsMapPlacementArray[1][1] = {elementType: 'no element', elementLength: 'no element'};
+            columnsMapPlacementArray[1][2] = {elementType: 'no element', elementLength: 'no element'};
+            columnsMapPlacementArray[2][0] = {elementType: 'no element', elementLength: 'no element'};
+            columnsMapPlacementArray[2][1] = {elementType: 'no element', elementLength: 'no element'};
+            columnsMapPlacementArray[2][2] = {elementType: 'no element', elementLength: 'no element'};
+
+            columnsArray = [];
+            matchedEntitiesInfo.forEach(function (element) {
+                if (element.entityMeaning.indexOf("element") >= 0) {
+                    if (typeof columnsArray[element.mapsElementNumber] == 'undefined') {
+                        columnsArray[element.mapsElementNumber] = [];
+                    }
+                    columnsArray[element.mapsElementNumber][element.entityMeaning] = element.entityValue;
+                }
+            });
+            columnsArray.forEach(function (data, key) {
+                if (data.elementType == 'column') {
+                    columnsMapPlacementArray[SIZES_COMPARISION_DICTIONARY[data.elementVerticalPlacement]][SIZES_COMPARISION_DICTIONARY[data.elementHorizontalPlacement]]
+                        = {elementType: data.elementType, elementLength: data.elementSize}
+                }
             });
         }
 
@@ -136,7 +173,7 @@ var CodeBuilder = function () {
                     break;
             }
             return height == Math.round(platformHeight) &&
-                elementsMapPlacementArray[rowNumber][columnNumber].elementType == 'platform'  &&
+                platformsMapPlacementArray[rowNumber][columnNumber].elementType == 'platform'  &&
                 width > columnNumber * (mapWidth/3) &&
                 width < (columnNumber + 1) * mapWidth/3
         };
@@ -148,21 +185,21 @@ var CodeBuilder = function () {
          * @param columnNumber int 0, 1 or 2
          * @returns {boolean}
          */
-        function isWallDefined(width, height, rowNumber, columnNumber) {
-            var wallWidth = mapWidth/5;
+        function isColumnDefined(width, height, rowNumber, columnNumber) {
+            var columnWidth = mapWidth/5;
             switch (columnNumber) {
                 case 0:
-                    wallWidth = mapWidth/5;
+                    columnWidth = mapWidth/5;
                     break;
                 case 1:
-                    wallWidth = mapWidth/2;
+                    columnWidth = mapWidth/2;
                     break;
                 case 2:
-                    wallWidth = 4*mapWidth/5;
+                    columnWidth = 4*mapWidth/5;
                     break;
             }
-            return width == Math.round(wallWidth) &&
-                elementsMapPlacementArray[rowNumber][columnNumber].elementType == 'wall'  &&
+            return width == Math.round(columnWidth) &&
+                columnsMapPlacementArray[rowNumber][columnNumber].elementType == 'column'  &&
                 height > rowNumber * (mapHeight/3) &&
                 height < (rowNumber + 1) * mapHeight/3
         };
@@ -174,13 +211,13 @@ var CodeBuilder = function () {
             var mediumMaxLimit = columnNumber * (mapWidth/3) + 5 * mapWidth/18;
             var shortMinLimit = columnNumber * (mapWidth/3) + mapWidth/9;
             var shortMaxLimit = columnNumber * (mapWidth/3) + 2 * mapWidth/9;
-            if (elementsMapPlacementArray[rowNumber][columnNumber].elementLength == 'long' && width > longMinLimit && width < longMaxLimit) {
+            if (platformsMapPlacementArray[rowNumber][columnNumber].elementLength == 'long' && width > longMinLimit && width < longMaxLimit) {
                 return 2;
             }
-            else if (elementsMapPlacementArray[rowNumber][columnNumber].elementLength == 'medium' && width > mediumMinLimit && width < mediumMaxLimit) {
+            else if (platformsMapPlacementArray[rowNumber][columnNumber].elementLength == 'medium' && width > mediumMinLimit && width < mediumMaxLimit) {
                 return 2;
             }
-            else if (elementsMapPlacementArray[rowNumber][columnNumber].elementLength == 'short' && width > shortMinLimit && width < shortMaxLimit) {
+            else if (platformsMapPlacementArray[rowNumber][columnNumber].elementLength == 'short' && width > shortMinLimit && width < shortMaxLimit) {
                 return 2;
             }
             else {
@@ -188,20 +225,20 @@ var CodeBuilder = function () {
             }
         };
 
-        function getWallTileNumber(height, rowNumber, columnNumber) {
+        function getColumnTileNumber(height, rowNumber, columnNumber) {
             var longMinLimit = rowNumber * (mapHeight/3);
             var longMaxLimit = (rowNumber + 1) * mapHeight/3;
             var mediumMinLimit = rowNumber * (mapHeight/3) + mapHeight/18;
             var mediumMaxLimit = rowNumber * (mapHeight/3) + 5 * mapHeight/18;
             var shortMinLimit = rowNumber * (mapHeight/3) + mapHeight/9;
             var shortMaxLimit = rowNumber * (mapHeight/3) + 2 * mapHeight/9;
-            if (elementsMapPlacementArray[rowNumber][columnNumber].elementLength == 'long' && height > longMinLimit && height < longMaxLimit) {
+            if (columnsMapPlacementArray[rowNumber][columnNumber].elementLength == 'long' && height > longMinLimit && height < longMaxLimit) {
                 return 2;
             }
-            else if (elementsMapPlacementArray[rowNumber][columnNumber].elementLength == 'medium' && height > mediumMinLimit && height < mediumMaxLimit) {
+            else if (columnsMapPlacementArray[rowNumber][columnNumber].elementLength == 'medium' && height > mediumMinLimit && height < mediumMaxLimit) {
                 return 2;
             }
-            else if (elementsMapPlacementArray[rowNumber][columnNumber].elementLength == 'short' && height > shortMinLimit && height < shortMaxLimit) {
+            else if (columnsMapPlacementArray[rowNumber][columnNumber].elementLength == 'short' && height > shortMinLimit && height < shortMaxLimit) {
                 return 2;
             }
             else {

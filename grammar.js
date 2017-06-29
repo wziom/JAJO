@@ -72,7 +72,7 @@ var Grammar = function () {
         [
             {wordText: 'platformę', wordMeaning: 'platform'},
             {wordText: 'kładkę', wordMeaning: 'platform'},
-            {wordText: 'ścianę', wordMeaning: 'wall'}
+            {wordText: 'ścianę', wordMeaning: 'column'}
         ], [], [], [],
         [
             {entity: this.J, entityMeaning: 'elementHorizontalPlacement'}
