@@ -1,5 +1,4 @@
 # Generator plansz do gry platformowej
-## Projekt z przedmiotu Automaty, Języki i Obliczenia 
 #### Spis treści
 1. Wstęp
 2. Cel projektu
